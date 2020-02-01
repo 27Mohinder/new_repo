@@ -1,0 +1,15 @@
+For linking the email with the Account:
+=========================================
+1. In below query, edit email id of the customer and check in DB, and take the UUID:
+		select * from NCS.CLOUD_USER where EMAIL = 'sanjib.shrestha@firstwavecloud.com';
+2. Run the below query by updating the UUID and check if Account is linked with email.
+   If we get output, then account is linked with email. If result is blank, then account is not linked.
+		select * from NCS.CLOUD_USER_TENANCY where UUID='cf43ca0a46a64ee683c4cabce082721a';
+3. If account is not linked, Take the Account ID of the customer and search in PBA. 
+   Click on the result (Account ID) and new window will open. Then go to Additional Information,
+   and take 'CTID' (ff030f8035c14718b850474593b6a221) of the customer.
+4. Then update the below query and execute:
+		execute NCS.INSERT_CLOUD_USER_TENANCY('cf43ca0a46a64ee683c4cabce082721a','ff030f8035c14718b850474593b6a221');
+		commit;
+5. Verify with the below query:
+		select * from NCS.CLOUD_USER_TENANCY where uuid='cf43ca0a46a64ee683c4cabce082721a';
